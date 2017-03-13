@@ -1,22 +1,23 @@
 const webpack = require('webpack');
 const path = require('path');
+const src = path.resolve('./src/');
 const dist = path.resolve('./dist/');
-const PACKAGE = require('./package.json');
-
-const banner = 
-	PACKAGE.name + ' - v' + PACKAGE.version + '\n' +
-	'@author ' + PACKAGE.author + '\n' +
-	'@license ' + PACKAGE.license + '\n' +
-	'@homepage ' + PACKAGE.homepage;
 
 module.exports = {
-	context: path.resolve('./src/'),
+	watch: true,
+	devtool: 'source-map',
+	context: src,
 	entry: {
 		'windowise': './js/index',
-		'windowise.min': './js/index'
+		'windowise.min': './js/index',
+	},
+	resolve: {
+		alias: {
+			svg: path.resolve('./src/svg/')
+		}
 	},
 	output: {
-		filename: '/[name].js',
+		filename: '[name].js',
 		path: dist,
 		library: ['Windowise'],
 		libraryTarget: 'umd'
@@ -34,6 +35,11 @@ module.exports = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.svg$/,
+				exclude: /node_modules/,
+				use: 'raw-loader'
 			}
 		]
 	},
@@ -41,7 +47,6 @@ module.exports = {
 		new webpack.optimize.UglifyJsPlugin({
 			include: /\.min\.js$/,
 			minimize: true
-		}),
-		new webpack.BannerPlugin(banner)
+		})
 	]
 };

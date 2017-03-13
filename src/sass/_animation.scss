@@ -1,0 +1,103 @@
+// Overlay
+.wwise-overlay-in-1 {
+	opacity: 0;
+}
+
+.wwise-overlay-in-2 {
+	opacity: 1;
+}
+
+.wwise-overlay-out-1 {
+	opacity: 0;
+}
+
+// Fade
+.wwise-fade-in-1 {
+	transform: scale(0.5, 0.5);
+	margin-top: 50px;
+	opacity: .5;
+}
+
+.wwise-fade-in-2 {
+	transform: scale(1, 1);
+	margin-top: 0;
+	opacity: 1;
+}
+
+.wwise-fade-in-3 {
+	transform: scale(1.05, 1.05);
+}
+
+.wwise-fade-in-4 {
+	transform: scale(1, 1);
+}
+
+.wwise-fade-out-1 {
+	transform: scale(0.25, 0.25);
+	margin-top: 50px;
+	opacity: 0;
+}
+
+// Top
+.wwise-top-in-1 {
+	transform: translateY(-50vh);
+	opacity: .5;
+}
+
+.wwise-top-in-2 {
+	transform: none;
+	opacity: 1;
+}
+
+.wwise-top-out-1 {
+	transform: translateY(-50vh);
+	opacity: 0;
+}
+
+// Bottom
+.wwise-bottom-in-1 {
+	transform: translateY(50vh);
+	opacity: .5;
+}
+
+.wwise-bottom-in-2 {
+	transform: none;
+	opacity: 1;
+}
+
+.wwise-bottom-out-1 {
+	transform: translateY(50vh);
+	opacity: 0;
+}
+
+// Left
+.wwise-left-in-1 {
+	transform: translateX(-50vh);
+	opacity: .5;
+}
+
+.wwise-left-in-2 {
+	transform: none;
+	opacity: 1;
+}
+
+.wwise-left-out-1 {
+	transform: translateX(-50vh);
+	opacity: 0;
+}
+
+// Right
+.wwise-right-in-1 {
+	transform: translateX(50vh);
+	opacity: .5;
+}
+
+.wwise-right-in-2 {
+	transform: none;
+	opacity: 1;
+}
+
+.wwise-right-out-1 {
+	transform: translateX(50vh);
+	opacity: 0;
+}

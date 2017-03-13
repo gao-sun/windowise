@@ -1,0 +1,29 @@
+.wwise-wrapper {
+	position: fixed;
+	width: 0;
+	height: 0;
+
+	&.v-center {
+		top: 50%;
+	}
+
+	&.h-center {
+		left: 50%;
+	}
+
+	&.left {
+		left: 0;
+	}
+
+	&.right {
+		right: 0;
+	}
+
+	&.top {
+		top: 0;
+	}
+
+	&.bottom {
+		bottom: 0;
+	}
+}

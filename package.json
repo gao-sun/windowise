@@ -27,9 +27,16 @@
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",
     "babel-preset-es2015": "^6.22.0",
-    "webpack": "^2.2.1"
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean-css": "^3.0.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "raw-loader": "^0.5.1",
+    "webpack": "^2.2.1",
+    "webpack-stream": "^3.2.0"
   },
   "dependencies": {
-    "animatorjs": "0.0.7"
+    "animatorjs": "^1.0.0"
   }
 }

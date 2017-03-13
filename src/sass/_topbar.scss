@@ -1,0 +1,44 @@
+.wwise {
+	.topbar {
+		flex-grow: 0;
+		width: 100%;
+		border-radius: 4px 4px 0 0;
+		box-shadow: 0 -3px 3px rgba(200,200,200,.5) inset;
+
+		.control {
+			float: right;
+			height: 40px;
+			padding: 14px 10px 0 0;
+
+			.icon {
+				width: 16px;
+				height: 16px;
+				margin: 0 3px;
+				transition: fill ease .2s;
+
+				&.close {
+					fill: #EE3163;
+					
+					&:hover {
+						fill: darken(#EE3163, 15%);
+					}
+				}
+
+				&.min {
+					fill: rgb(254,153,65);
+
+					&:hover {
+						fill: darken(rgb(254,153,65), 15%);
+					}
+				}
+			}
+		}
+
+		.title {
+			padding: 15px 50px 10px 20px;
+			font-size: 16px;
+			user-select: none;
+			cursor: default;
+		}
+	}
+}
