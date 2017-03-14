@@ -12,6 +12,7 @@ let defaultOptions = {
 	position: 'center',
 	overlay: false,
 	clickOverlayToClose: true,
+	removeBackground: false,
 };
 
 class Window {
@@ -107,6 +108,7 @@ class Window {
 				children: [ this.options.content ]
 			});
 		}
+		(this.options.removeBackground) && (this.content.style.background = 'initial');
 
 		// Window
 		this.window = Utility.createDomTree({ 
@@ -226,7 +228,7 @@ class Window {
 
 		let animation = toMin ? 'min' : this.options.animation;
 
-		this.overlay.removeEventListener('click', this.overlayClickHandler);
+		(this.overlay) && (this.overlay.removeEventListener('click', this.overlayClickHandler));
 
 		if(animation) {
 			if(animation == 'min' || animation == 'flip') {
@@ -263,7 +265,7 @@ class Window {
 	}
 
 	appendDoms() {
-		(!this.hasOverlay) && (Utility.appendToBody(this.overlay));
+		(this.options.overlay && !this.hasOverlay) && (Utility.appendToBody(this.overlay));
 		Utility.appendToBody(this.dom);
 	}
 

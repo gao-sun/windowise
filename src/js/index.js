@@ -1,5 +1,6 @@
 import Window from './window';
 import Modal from './modal';
+import Nft from './notification';
 import create from './create';
 import SVG from 'svg/sprite.svg';
 
@@ -12,4 +13,4 @@ window.addEventListener('load', () => {
 	document.body.insertBefore(dom, document.body.firstChild);
 });
 
-export { Window, Modal, create };
+export { Window, Modal, Nft, create };

@@ -46,11 +46,11 @@ for(let i in dirs) {
 
 	Animation[key + '_in'] = [
 		new Frame('.wwise-' + key + '-in-1', 0),
-		new Frame('.wwise-' + key + '-in-2', 350),
+		new Frame('.wwise-' + key + '-in-2', 500),
 	];
 
 	Animation[key + '_out'] = [
-		new Frame('.wwise-' + key + '-out-1', 300)
+		new Frame('.wwise-' + key + '-out-1', 400)
 	];
 }
 
