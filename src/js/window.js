@@ -37,15 +37,20 @@ class Window {
 		if(this.options.overlay) {
 			this.overlay = Utility.createDiv('wwise-overlay');
 			if(this.options.clickOverlayToClose) {
-				this.overlay.addEventListener('click', this.close.bind(this));
+				this.overlay.addEventListener('click', this.close.bind(this, undefined));
 			}
 		}
 
 		// Topbar Controls
 		let controls = [];
 
-		controls[0] = Utility.createDiv(null, Utility.makeIconHTML('close'));
-		controls[0].addEventListener('click', this.close.bind(this));
+		if(this.options.showMinButton) {
+			controls.push(Utility.createDiv(null, Utility.makeIconHTML('min')));
+			controls[controls.length - 1].addEventListener('click', this.min.bind(this));
+		}
+
+		controls.push(Utility.createDiv(null, Utility.makeIconHTML('close')));
+		controls[controls.length - 1].addEventListener('click', this.close.bind(this, undefined));
 
 		// Topbar
 		let contentClassName = 'content';
@@ -150,7 +155,7 @@ class Window {
 		}
 	}
 
-	open() {
+	open(fromMin) {
 		if(this.opened) {
 			return;
 		}
@@ -158,31 +163,41 @@ class Window {
 		Utility.appendToBody(this.dom);
 		this.opened = true;
 
-		let animation = this.options.animation;
+		let animation = fromMin ? 'min' : this.options.animation;
 
 		if(animation) {
+			if(animation == 'min') {
+				this.dom.classList.add('wwise-perspective');
+			}
+
 			let q = [ (new Queue(this.wrapper, Animation[animation + '_in'], { instant: true, applyOnEnd: true })).getPromise() ];
 
 			if(this.options.overlay) {
 				q.push((new Queue(this.overlay, Animation.overlay_in, { instant: true, applyOnEnd: true })).getPromise());
 			}
 
-			return Promise.all(q);
+			return Promise.all(q).then(() => {
+				this.dom.classList.remove('wwise-perspective');
+			});
 		}
 
 		return Promise.resolve();
 	}
 
-	close() {
+	close(toMin) {
 		if(!this.opened) {
 			return;
 		}
 
 		this.opened = false;
 
-		let animation = this.options.animation;
+		let animation = toMin ? 'min' : this.options.animation;
 
 		if(animation) {
+			if(animation == 'min') {
+				this.dom.classList.add('wwise-perspective');
+			}
+
 			let q = [ (new Queue(this.wrapper, Animation[animation + '_out'], { instant: true, applyOnEnd: true })).getPromise() ];
 
 			if(this.options.overlay) {
@@ -191,11 +206,20 @@ class Window {
 
 			return Promise.all(q).then(() => {
 				Utility.removeElement(this.dom);
+				this.dom.classList.remove('wwise-perspective');
 			});
 		}
 		
 		Utility.removeElement(this.dom);
 		return Promise.resolve();
+	}
+
+	min() {
+		this.close(true);
+	}
+
+	resume() {
+		this.open(true)
 	}
 
 	// Draggable functions

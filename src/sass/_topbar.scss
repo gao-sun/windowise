@@ -10,17 +10,21 @@
 			height: 40px;
 			padding: 14px 10px 0 0;
 
+			> * {
+				display: inline-block;
+				margin: 0 3px;
+			}
+
 			.icon {
 				width: 16px;
 				height: 16px;
-				margin: 0 3px;
 				transition: fill ease .2s;
 
 				&.close {
 					fill: #EE3163;
 					
 					&:hover {
-						fill: darken(#EE3163, 15%);
+						fill: darken(#EE3163, 10%);
 					}
 				}
 
@@ -28,7 +32,15 @@
 					fill: rgb(254,153,65);
 
 					&:hover {
-						fill: darken(rgb(254,153,65), 15%);
+						fill: darken(rgb(254,153,65), 10%);
+					}
+				}
+
+				&.max {
+					fill: rgb(0,185,56);
+
+					&:hover {
+						fill: darken(rgb(0,185,56), 10%);
 					}
 				}
 			}

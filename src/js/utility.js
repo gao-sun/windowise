@@ -49,6 +49,8 @@ Utility.appendToBody = (dom) => {
 Utility.makeIconHTML = (type) => {
 	let href = '';
 
+	(type == 'min') && (href = '#001-line');
+	(type == 'max') && (href = '#002-plus');
 	(type == 'close') && (href = '#003-close');
 	return `<svg class="icon ${ type }"><use xlink:href="${ href }" /></svg>`;
 };

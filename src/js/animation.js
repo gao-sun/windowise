@@ -22,17 +22,26 @@ Animation.fade_out = [
 	new Frame('.wwise-fade-out-1', { duration: 250, 'timing-function': 'ease-in' })
 ];
 
+Animation.min_in = [
+	new Frame('.wwise-min-in-1', 0),
+	new Frame('.wwise-min-in-2', 350)
+];
+
+Animation.min_out = [
+	new Frame('.wwise-min-out-1', 400)
+];
+
 let dirs = ['top', 'bottom', 'left', 'right'];
 for(let i in dirs) {
 	let key = dirs[i];
 
 	Animation[key + '_in'] = [
 		new Frame('.wwise-' + key + '-in-1', 0),
-		new Frame('.wwise-' + key + '-in-2', { duration: 350, 'timing-function': 'ease' }),
+		new Frame('.wwise-' + key + '-in-2', 350),
 	];
 
 	Animation[key + '_out'] = [
-		new Frame('.wwise-' + key + '-out-1', { duration: 300, 'timing-function': 'ease' })
+		new Frame('.wwise-' + key + '-out-1', 300)
 	];
 }
 

@@ -101,3 +101,21 @@
 	transform: translateX(50vh);
 	opacity: 0;
 }
+
+// Min
+.wwise-min-in-1 {
+	margin-top: 0;
+	transform: rotateX(-60deg) scale(0.2, 1.8) translateY(80vh);
+	opacity: .2;
+}
+
+.wwise-min-in-2 {
+	transform: none;
+	opacity: 1;
+}
+
+.wwise-min-out-1 {
+	margin-top: 50vh;
+	transform: rotateX(-60deg) scale(0.1, 2);
+	opacity: 0;
+}
