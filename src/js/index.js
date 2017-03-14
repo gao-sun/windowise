@@ -1,4 +1,5 @@
 import Window from './window';
+import Modal from './modal';
 import create from './create';
 import SVG from 'svg/sprite.svg';
 
@@ -11,4 +12,4 @@ window.addEventListener('load', () => {
 	document.body.insertBefore(dom, document.body.firstChild);
 });
 
-export { Window, create };
+export { Window, Modal, create };

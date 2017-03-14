@@ -1,5 +1,6 @@
 import Window from './window';
-import Utility from './Utility';
+import Modal from './modal';
+import Utility from './utility';
 
 let create = (dom, options) => {
 	let title = dom.getElementsByClassName('title')[0].innerHTML;

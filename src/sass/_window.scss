@@ -10,18 +10,18 @@
 	flex-direction: column;
 	border-radius: 5px;
 	// background: white;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #bbb;
 	box-shadow: 1px 1px 10px rgba(150,150,150,.5);
 	box-sizing: border-box;
 
 	&.no-border {
 		border: none;
-		border-radius: 0;
+		// border-radius: 0;
 
-		.topbar,
-		.content {
-			border-radius: 0 !important;
-		}
+		// .topbar,
+		// .content {
+		// 	border-radius: 0 !important;
+		// }
 	}
 
 	* {

@@ -11,15 +11,24 @@ Animation.overlay_out = [
 	new Frame('.wwise-overlay-out-1', 300)
 ];
 
-Animation.fade_in = [
-	new Frame('.wwise-fade-in-1', 0),
-	new Frame('.wwise-fade-in-2', { duration: 200, 'timing-function': 'ease-in' }),
-	new Frame('.wwise-fade-in-3', { duration: 100, 'timing-function': 'linear' }),
-	new Frame('.wwise-fade-in-4', { duration: 100, 'timing-function': 'linear' })
+Animation.pop_in = [
+	new Frame('.wwise-pop-in-1', 0),
+	new Frame('.wwise-pop-in-2', { duration: 200, 'timing-function': 'ease-in' }),
+	new Frame('.wwise-pop-in-3', { duration: 100, 'timing-function': 'linear' }),
+	new Frame('.wwise-pop-in-4', { duration: 100, 'timing-function': 'linear' })
 ];
 
-Animation.fade_out = [
-	new Frame('.wwise-fade-out-1', { duration: 250, 'timing-function': 'ease-in' })
+Animation.pop_out = [
+	new Frame('.wwise-pop-out-1', { duration: 250, 'timing-function': 'ease-in' })
+];
+
+Animation.flip_in = [
+	new Frame('.wwise-flip-in-1', 0),
+	new Frame('.wwise-flip-in-2', 500)
+];
+
+Animation.flip_out = [
+	new Frame('.wwise-flip-out-1', 400)
 ];
 
 Animation.min_in = [

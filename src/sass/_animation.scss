@@ -11,32 +11,50 @@
 	opacity: 0;
 }
 
-// Fade
-.wwise-fade-in-1 {
+// Pop
+.wwise-pop-in-1 {
 	transform: scale(0.5, 0.5);
 	margin-top: 50px;
 	opacity: .5;
 }
 
-.wwise-fade-in-2 {
+.wwise-pop-in-2 {
 	transform: scale(1, 1);
 	margin-top: 0;
 	opacity: 1;
 }
 
-.wwise-fade-in-3 {
+.wwise-pop-in-3 {
 	transform: scale(1.05, 1.05);
 }
 
-.wwise-fade-in-4 {
+.wwise-pop-in-4 {
 	transform: scale(1, 1);
 }
 
-.wwise-fade-out-1 {
+.wwise-pop-out-1 {
 	transform: scale(0.25, 0.25);
 	margin-top: 50px;
 	opacity: 0;
 }
+
+// Flip
+
+.wwise-flip-in-1 {
+	transform: rotateX(60deg) scaleX(.5);
+	opacity: .2;
+}
+
+.wwise-flip-in-2 {
+	transform: none;
+	opacity: 1;
+}
+
+.wwise-flip-out-1 {
+	transform: rotateX(60deg) scaleX(.5);
+	opacity: 0;
+}
+
 
 // Top
 .wwise-top-in-1 {
@@ -115,7 +133,7 @@
 }
 
 .wwise-min-out-1 {
-	margin-top: 50vh;
-	transform: rotateX(-60deg) scale(0.1, 2);
+	margin-top: 30vh;
+	transform: rotateX(-60deg) scale(0.05, 2) translateY(50vh);
 	opacity: 0;
 }

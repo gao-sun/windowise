@@ -1,19 +1,25 @@
 import { Queue } from 'animatorjs';
 import Animation from './animation';
-import Utility from './Utility';
+import Utility from './utility';
+
+let defaultOptions = {
+	animation: 'pop',
+	topbar: {
+		showClose: true,
+		showMin: false
+	},
+	keepOverlay: false,
+	position: 'center',
+	overlay: false,
+	clickOverlayToClose: true,
+};
 
 class Window {
 	constructor(options) {
 		// Init options
-		this.options = options;
-
-		if(options.animation == undefined) {
-			this.options.animation = 'fade';
-		}
-
-		// Init position
-		if(!options.position) {
-			this.options.position = 'center';
+		this.options = JSON.parse(JSON.stringify(defaultOptions));
+		for(let i in options) {
+			(options[i] != undefined) && (this.options[i] = options[i]);
 		}
 
 		let position = this.options.position;
@@ -28,34 +34,49 @@ class Window {
 		}
 		this.options.position = position;
 
-		// Init overlay
-		if(options.overlay && options.clickOverlayToClose == undefined) {
-			this.options.clickOverlayToClose = true;
-		}
-
 		// Overlay
 		if(this.options.overlay) {
-			this.overlay = Utility.createDiv('wwise-overlay');
-			if(this.options.clickOverlayToClose) {
-				this.overlay.addEventListener('click', this.close.bind(this, undefined));
+			let cuurentOverlay = document.getElementsByClassName('wwise-overlay');
+
+			if(cuurentOverlay.length) {
+				this.overlay = cuurentOverlay[0];
+				this.hasOverlay = true;
+			} else {
+				this.overlay = Utility.createDiv('wwise-overlay');
 			}
+			
+			this.overlayClickHandler = this.close.bind(this, undefined);
+		} else {
+			this.options.clickOverlayToClose = false;
 		}
-
-		// Topbar Controls
-		let controls = [];
-
-		if(this.options.showMinButton) {
-			controls.push(Utility.createDiv(null, Utility.makeIconHTML('min')));
-			controls[controls.length - 1].addEventListener('click', this.min.bind(this));
-		}
-
-		controls.push(Utility.createDiv(null, Utility.makeIconHTML('close')));
-		controls[controls.length - 1].addEventListener('click', this.close.bind(this, undefined));
-
+		
 		// Topbar
 		let contentClassName = 'content';
+		if(this.options.topbar) {
+		// Topbar Controls
+			let controls = [];
 
-		if(this.options.topbar == undefined || this.options.topbar) {
+			if(this.options.topbar.showMin) {
+				controls.push(Utility.createDiv(null, Utility.makeIconHTML('min')));
+				controls[controls.length - 1].addEventListener('click', this.min.bind(this));
+			}
+
+			if(this.options.topbar.showClose) {
+				controls.push(Utility.createDiv(null, Utility.makeIconHTML('close')));
+				controls[controls.length - 1].addEventListener('click', this.close.bind(this, undefined));
+			}
+			
+			let titleDom = null;
+
+			if(typeof this.options.title === 'string') {
+				titleDom = Utility.createDiv('title', this.options.title);
+			} else {
+				titleDom = Utility.createDomTree({
+					dom: Utility.createDiv('title'),
+					children: [ this.options.title ]
+				});
+			}
+
 			this.topbar = Utility.createDomTree({ 
 				dom: Utility.createDiv('topbar'),
 				children: [
@@ -64,7 +85,7 @@ class Window {
 						children: controls.map(value => { return { dom: value }; })
 					},
 					{
-						dom: Utility.createDiv('title', this.options.title)
+						dom: titleDom
 					},
 					{
 						dom: Utility.createDiv('clear')
@@ -76,9 +97,16 @@ class Window {
 		}
 
 		// Content
-		this.content = Utility.createDomTree({
-			dom: Utility.createDiv(contentClassName, this.options.content)
-		});
+		if(typeof this.options.content === 'string') {
+			this.content = Utility.createDomTree({
+				dom: Utility.createDiv(contentClassName, this.options.content)
+			});
+		} else {
+			this.content = Utility.createDomTree({
+				dom: Utility.createDiv(contentClassName),
+				children: [ this.options.content ]
+			});
+		}
 
 		// Window
 		this.window = Utility.createDomTree({ 
@@ -98,7 +126,7 @@ class Window {
 		// Whole DOM
 		this.dom = Utility.createDomTree({
 			dom: Utility.createDiv(),
-			children: [ this.overlay, this.wrapper ]
+			children: [ this.wrapper ]
 		});
 
 		// Position
@@ -160,19 +188,24 @@ class Window {
 			return;
 		}
 
-		Utility.appendToBody(this.dom);
+		this.promise = new Promise((resolve) => { this.promiseResolve = resolve; });
+		this.appendDoms();
 		this.opened = true;
+
+		if(this.options.clickOverlayToClose) {
+			this.overlay.addEventListener('click', this.overlayClickHandler);
+		}
 
 		let animation = fromMin ? 'min' : this.options.animation;
 
 		if(animation) {
-			if(animation == 'min') {
+			if(animation == 'min' || animation == 'flip') {
 				this.dom.classList.add('wwise-perspective');
 			}
 
 			let q = [ (new Queue(this.wrapper, Animation[animation + '_in'], { instant: true, applyOnEnd: true })).getPromise() ];
 
-			if(this.options.overlay) {
+			if(this.options.overlay && !this.hasOverlay) {
 				q.push((new Queue(this.overlay, Animation.overlay_in, { instant: true, applyOnEnd: true })).getPromise());
 			}
 
@@ -193,24 +226,27 @@ class Window {
 
 		let animation = toMin ? 'min' : this.options.animation;
 
+		this.overlay.removeEventListener('click', this.overlayClickHandler);
+
 		if(animation) {
-			if(animation == 'min') {
+			if(animation == 'min' || animation == 'flip') {
 				this.dom.classList.add('wwise-perspective');
 			}
 
 			let q = [ (new Queue(this.wrapper, Animation[animation + '_out'], { instant: true, applyOnEnd: true })).getPromise() ];
 
-			if(this.options.overlay) {
+			if(this.options.overlay && !this.options.keepOverlay) {
 				q.push((new Queue(this.overlay, Animation.overlay_out, { instant: true, applyOnEnd: true })).getPromise());
 			}
 
 			return Promise.all(q).then(() => {
-				Utility.removeElement(this.dom);
+				this.removeDoms();
 				this.dom.classList.remove('wwise-perspective');
+				this.promiseResolve();
 			});
 		}
 		
-		Utility.removeElement(this.dom);
+		this.removeDoms();
 		return Promise.resolve();
 	}
 
@@ -220,6 +256,20 @@ class Window {
 
 	resume() {
 		this.open(true)
+	}
+
+	getPromise() {
+		return this.promise;
+	}
+
+	appendDoms() {
+		(!this.hasOverlay) && (Utility.appendToBody(this.overlay));
+		Utility.appendToBody(this.dom);
+	}
+
+	removeDoms() {
+		Utility.removeElement(this.dom);
+		(!this.options.keepOverlay) && (Utility.removeElement(this.overlay));
 	}
 
 	// Draggable functions
