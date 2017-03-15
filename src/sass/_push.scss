@@ -1,0 +1,63 @@
+.wwise {
+	.push {
+		width: 100vw;
+		background: rgba(250,250,250,.95);
+		cursor: default;
+
+		.content {
+			padding: 10px;
+			font-size: 17px;
+
+			> * {
+				display: inline-block;
+				vertical-align: top;
+			}
+
+			.icon {
+				margin-top: 2px;
+				margin-right: 10px;
+				width: 18px;
+				height: 18px;
+				fill: #f8f8f8;
+			}
+		}
+
+		.button-wrapper {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			padding-bottom: 10px;
+
+			> * {
+				flex-shrink: 0;
+				max-width: 250px;
+				width: 100%;
+				margin: 5px 10px;
+			}
+
+			.button {
+				border: 1px solid rgba(#eee, .9);
+				border-radius: 4px;
+				padding: 5px 0;
+				font-size: 14px;
+				color: #eee;
+				transition: all ease .2s;
+
+				&:hover {
+					cursor: pointer;
+					border-color: #d5d5d5;
+					color: #d5d5d5;
+				}
+
+				&.main {
+					background: rgba(#f8f8f8, .9);
+					color: rgba(#555, .8);
+
+					&:hover {
+						background: rgba(#e8e8e8, .9);
+					}
+				}
+			}
+		}
+	}
+}

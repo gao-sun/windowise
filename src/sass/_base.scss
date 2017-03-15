@@ -42,3 +42,25 @@ $color-nft-ok: darken($color-ok, 5%);
 		bottom: 0;
 	}
 }
+
+.wwise {
+	*.preset {
+		color: #fafafa;
+
+		&.ok {
+			background: rgba($color-ok, .95);
+		}
+
+		&.error {
+			background: rgba($color-error, .95);
+		}
+
+		&.info {
+			background: rgba($color-info, .95);
+		}
+
+		&.caution {
+			background: rgba($color-caution, .95);
+		}
+	}
+}

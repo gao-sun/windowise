@@ -1,6 +1,5 @@
 import Utility from './utility';
 import Window from './window';
-import Button from './button';
 
 class Modal {
 	constructor(__options) {
@@ -37,41 +36,7 @@ class Modal {
 			]
 		});
 
-		// Buttons 
-		let buttons = [];
-
-		if(options.buttons === undefined) {
-			if(options.type == 'caution' || options.type == 'info') {
-				buttons.push(
-					Button.create({
-						text: 'Cancel',
-						onClick: this.close.bind(this, 'cancel')
-					})
-				);
-			}
-
-			buttons.push(
-				Button.create({
-					text: 'OK',
-					type: 'main',
-					onClick: this.close.bind(this, 'ok')
-				})
-			);
-		} else if(options.buttons) {
-			if(!(options.buttons.constructor === Array)) {
-				options.buttons = [options.buttons];
-			}
-
-			for(let i in options.buttons) {
-				buttons.push(Button.create({
-					text: options.buttons[i].text ? options.buttons[i].text : 'OK',
-					type: options.buttons[i].normal ? null : 'main',
-					onClick: options.buttons[i].onClick ? 
-						options.buttons[i].onClick :
-						this.close.bind(this, options.buttons[i].id)
-				}));
-			}
-		}
+		let buttons = Utility.makeButtons(this, options);
 
 		// Content
 		let content = null;
@@ -82,15 +47,10 @@ class Modal {
 		// Operations
 		let operation = null;
 
-		if(buttons.length > 0) {
+		if(buttons.innerHTML) {
 			operation = Utility.createDomTree({
 				dom: Utility.createDiv('operation ' + options.type),
-				children: [ 
-					Utility.createDomTree({
-						dom: Utility.createDiv('button-wrapper'),
-						children: buttons
-					})
-				]
+				children: [ buttons ]
 			});
 		}
 

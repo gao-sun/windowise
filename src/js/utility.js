@@ -1,3 +1,5 @@
+import Button from './button';
+
 let Utility = {};
 
 Utility.createElement = (tag, className, innerHTML, attributes) => {
@@ -60,5 +62,83 @@ Utility.makeIconHTML = (type) => {
 
 	return `<svg class="icon ${ type }"><use xlink:href="${ href }" /></svg>`;
 };
+
+Utility.makeNftContent = (options) => {
+	let content = null;
+
+	if(options.type) {
+		let innerContent = null;
+
+		if(typeof options.content === 'string') {
+			innerContent = Utility.createDiv('inner-content', options.content);
+		} else {
+			innerContent = Utility.createDomTree({
+				dom: Utility.createDiv('inner-content'), 
+				children: [options.content]
+			});
+		}
+
+		if(options.type == 'text') {
+			content = Utility.createDomTree({
+				dom: Utility.createDiv('content text'),
+				children: [ innerContent ]
+			});
+		} else {
+			content = Utility.createDomTree({
+				dom: Utility.createDiv('content'),
+				children: [
+					Utility.createDiv('state', Utility.makeIconHTML(options.type)),
+					innerContent
+				]
+			});
+		}
+	} else if(typeof options.content === 'string') {
+		content = Utility.createDiv('content', options.content);
+	}
+
+	return content;
+};
+
+Utility.makeButtons = (modal, options) => {
+	let buttons = [];
+
+	if(options.buttons === undefined) {
+		if(options.type == 'caution' || options.type == 'info') {
+			buttons.push(
+				Button.create({
+					text: 'Cancel',
+					onClick: modal.close.bind(modal, 'cancel')
+				})
+			);
+		}
+
+		buttons.push(
+			Button.create({
+				text: 'OK',
+				type: 'main',
+				onClick: modal.close.bind(modal, 'ok')
+			})
+		);
+	} else if(options.buttons) {
+		if(!(options.buttons.constructor === Array)) {
+			options.buttons = [options.buttons];
+		}
+
+		for(let i in options.buttons) {
+			buttons.push(Button.create({
+				text: options.buttons[i].text ? options.buttons[i].text : 'OK',
+				type: options.buttons[i].normal ? null : 'main',
+				onClick: options.buttons[i].onClick ? 
+					options.buttons[i].onClick :
+					modal.close.bind(modal, options.buttons[i].id)
+			}));
+		}
+	}
+
+	return Utility.createDomTree({
+		dom: Utility.createDiv('button-wrapper'),
+		children: buttons
+	});
+}
 
 export default Utility;

@@ -4,7 +4,7 @@ let Animation = {};
 
 Animation.overlay_in = [
 	new Frame('.wwise-overlay-in-1', 0),
-	new Frame('.wwise-overlay-in-2', 300)
+	new Frame('.wwise-overlay-in-2', 400)
 ];
 
 Animation.overlay_out = [
@@ -46,11 +46,11 @@ for(let i in dirs) {
 
 	Animation[key + '_in'] = [
 		new Frame('.wwise-' + key + '-in-1', 0),
-		new Frame('.wwise-' + key + '-in-2', 500),
+		new Frame('.wwise-' + key + '-in-2', { duration: 400, 'timing-function': 'ease-out' }),
 	];
 
 	Animation[key + '_out'] = [
-		new Frame('.wwise-' + key + '-out-1', 400)
+		new Frame('.wwise-' + key + '-out-1', { duration: 400, 'timing-function': 'ease-in' })
 	];
 }
 

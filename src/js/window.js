@@ -161,17 +161,14 @@ class Window {
 
 		this.window.style.transform = `translate(${ translateX }%, ${ translateY }%)`;
 
+		if(this.options.style) {
+			for(let i in this.options.style) {
+				this.window.style[i] = this.options.style[i];
+			}
+		}
+
 		if(this.options.margin) {
 			this.wrapper.style.margin = this.options.margin;
-		}
-
-		// Size
-		if(this.options.width) {
-			this.window.style.width = this.options.width;
-		}
-
-		if(this.options.height) {
-			this.window.style.height = this.options.height;
 		}
 
 		// Border

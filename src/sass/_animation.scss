@@ -58,7 +58,7 @@
 
 // Top
 .wwise-top-in-1 {
-	transform: translateY(-50vh);
+	transform: translateY(-30vh);
 	opacity: .5;
 }
 
@@ -68,13 +68,13 @@
 }
 
 .wwise-top-out-1 {
-	transform: translateY(-50vh);
+	transform: translateY(-30vh);
 	opacity: 0;
 }
 
 // Bottom
 .wwise-bottom-in-1 {
-	transform: translateY(50vh);
+	transform: translateY(30vh);
 	opacity: .5;
 }
 
@@ -84,13 +84,13 @@
 }
 
 .wwise-bottom-out-1 {
-	transform: translateY(50vh);
+	transform: translateY(30vh);
 	opacity: 0;
 }
 
 // Left
 .wwise-left-in-1 {
-	transform: translateX(-50vh);
+	transform: translateX(-30vh);
 	opacity: .5;
 }
 
@@ -100,13 +100,13 @@
 }
 
 .wwise-left-out-1 {
-	transform: translateX(-50vh);
+	transform: translateX(-30vh);
 	opacity: 0;
 }
 
 // Right
 .wwise-right-in-1 {
-	transform: translateX(50vh);
+	transform: translateX(30vh);
 	opacity: .5;
 }
 
@@ -116,7 +116,7 @@
 }
 
 .wwise-right-out-1 {
-	transform: translateX(50vh);
+	transform: translateX(30vh);
 	opacity: 0;
 }
 
@@ -134,6 +134,6 @@
 
 .wwise-min-out-1 {
 	margin-top: 30vh;
-	transform: rotateX(-60deg) scale(0.05, 2) translateY(50vh);
+	transform: rotateX(-60deg) scale(0.05, 2) translateY(30vh);
 	opacity: 0;
 }

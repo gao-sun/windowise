@@ -3,54 +3,55 @@ import Window from './window';
 
 let defaultOptions = {
 	type: null,
-	animation: 'right',
-	position: 'right top',
-	noBorder: true,
-	showClose: true,
+	textAlign: 'center',
 	clickToClose: false,
-	closeAfter: null
+	closeAfter: null,
+	buttons: undefined,
 };
 
-class Nft {
+let defaultWwiseOptions = {
+	position: 'top',
+	noBorder: true,
+	overlay: false,
+	clickOverlayToClose: true,
+	style: null,
+};
+
+class Push {
 	constructor(__options) {
 		this.options = JSON.parse(JSON.stringify(defaultOptions));
 		for(let i in __options) {
 			(__options[i] != undefined) && (this.options[i] = __options[i]);
 		}
 
-		this.closeHandler = this.close.bind(this);
+		this.closeHandler = this.close.bind(this, 'click');
 
 		let options = this.options;
-		let wwiseOptions = {};
+		let wwiseOptions = JSON.parse(JSON.stringify(defaultWwiseOptions));
+
+		for(let i in wwiseOptions) {
+			(options.hasOwnProperty(i)) && (wwiseOptions[i] = options[i]);
+		}
 
 		wwiseOptions.topbar = false;
 		wwiseOptions.content = this.constructContent(options);
-		wwiseOptions.overlay = false;
-		wwiseOptions.animation = options.animation;
-		wwiseOptions.position = options.position;
-		wwiseOptions.style = options.style;
-		wwiseOptions.margin = '10px 15px';
-		wwiseOptions.noBorder = options.noBorder;
+		wwiseOptions.animation = wwiseOptions.position;
 		wwiseOptions.removeBackground = true;
 
 		this.wwise = new Window(wwiseOptions);
 	}
 
 	constructContent(options) {
-		let dom = Utility.createDiv('nft' + ((options.type && options.type != 'text') ? (' preset ' + options.type) : ''));
+		let dom = Utility.createDiv('push' + ((options.type && options.type != 'text') ? (' preset ' + options.type) : ''));
+
+		dom.style.textAlign = options.textAlign;
 
 		// Content
 		let content = Utility.makeNftContent(options);
 
-		let close = null;
-		if(options.showClose) {
-			close = Utility.createDomTree({
-				dom: Utility.createDiv('close'),
-				children: [ Utility.createDiv(null, Utility.makeIconHTML('nft-close')) ]
-			});
+		let buttons = Utility.makeButtons(this, options);
 
-			close.addEventListener('click', this.closeHandler);
-		}
+		(!buttons.innerHTML) && (buttons = null);
 
 		if(options.clickToClose) {
 			dom.addEventListener('click', this.closeHandler);
@@ -58,7 +59,7 @@ class Nft {
 		
 		return Utility.createDomTree({
 			dom: dom,
-			children: [ content, close ]
+			children: [ content, buttons ]
 		});
 	}
 
@@ -66,24 +67,29 @@ class Nft {
 		let f = this.wwise.open();
 
 		this.promise = new Promise((resolve) => { this.promiseResolve = resolve; });
-		this.wwise.getPromise().then(this.promiseResolve);
+		this.wwise.getPromise().then(this.handlePromiseResolve.bind(this));
 
 		if(this.options.closeAfter) {
 			window.setTimeout(() => {
-				this.close();
+				this.close('timer');
 			}, this.options.closeAfter);
 		}
 		
 		return f;
 	}
 
-	close() {
+	close(value) {
+		this.value = value;
 		this.wwise.close();
 	}
 
 	getPromise() {
 		return this.promise;
 	}
+
+	handlePromiseResolve() {
+		this.promiseResolve(this.value);
+	}
 }
 
-export default Nft;
+export default Push;
