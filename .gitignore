@@ -2,4 +2,5 @@
 *.map
 node_modules/
 test/
-dist/
+dist/windowise.css
+dist/windowise.js

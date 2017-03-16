@@ -1,7 +1,7 @@
 {
   "name": "windowise",
-  "version": "0.0.1",
-  "description": "Wise window manager, one for all.",
+  "version": "1.0.0",
+  "description": "Wisely create window/modal/notification/push in webpages.",
   "main": "dist/windowise.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/gao-sun/windowise/issues"
   },
-  "homepage": "https://github.com/gao-sun/windowise#readme",
+  "homepage": "https://gao-sun.github.io/windowise/",
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",

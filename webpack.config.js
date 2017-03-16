@@ -2,10 +2,17 @@ const webpack = require('webpack');
 const path = require('path');
 const src = path.resolve('./src/');
 const dist = path.resolve('./dist/');
+const PACKAGE = require('./package.json');
+
+const banner = 
+	'Windowise' + ' - v' + PACKAGE.version + ' | ' +
+	PACKAGE.author + ' | ' +
+	PACKAGE.license + ' | ' +
+	PACKAGE.homepage;
 
 module.exports = {
 	watch: true,
-	devtool: 'source-map',
+	// devtool: 'source-map',
 	context: src,
 	entry: {
 		'windowise': './js/index',
@@ -47,6 +54,7 @@ module.exports = {
 		new webpack.optimize.UglifyJsPlugin({
 			include: /\.min\.js$/,
 			minimize: true
-		})
+		}),
+		new webpack.BannerPlugin(banner)
 	]
 };
