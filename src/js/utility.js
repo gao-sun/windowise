@@ -55,7 +55,7 @@ Utility.makeIconHTML = (type) => {
 	(type == 'error') && (href = '#cancel');
 	(type == 'info') && (href = '#info-button');
 	(type == 'caution') && (href = '#danger');
-	(type == 'min') && (href = '#minus-symbol');
+	(type == 'min') && (href = '#line');
 	(type == 'close') && (href = '#close');
 
 	return `<svg class="icon ${ type }"><use xlink:href="${ href }" /></svg>`;

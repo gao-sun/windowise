@@ -256,15 +256,16 @@ class Window {
 		}
 		
 		this.removeDoms();
+		this.promiseResolve();
 		return Promise.resolve();
 	}
 
 	min() {
-		this.close(true);
+		return this.close(true);
 	}
 
 	resume() {
-		this.open(true)
+		return this.open(true);
 	}
 
 	getPromise() {
@@ -284,7 +285,7 @@ class Window {
 
 	removeDoms() {
 		Utility.removeElement(this.dom);
-		if(!this.options.keepOverlay) {
+		if(!this.options.keepOverlay && this.overlay) {
 			Utility.removeElement(this.overlay);
 			document.body.classList.remove('wwise-no-scroll');
 		}
