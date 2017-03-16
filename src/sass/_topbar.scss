@@ -3,7 +3,7 @@
 		flex-grow: 0;
 		width: 100%;
 		border-radius: 4px 4px 0 0;
-		box-shadow: 0 -3px 3px rgba(200,200,200,.5) inset;
+		background: rgba($color-info, .95);
 
 		.control {
 			float: right;
@@ -16,32 +16,14 @@
 			}
 
 			.icon {
-				width: 16px;
-				height: 16px;
+				width: 13px;
+				height: 13px;
+				fill: rgba(#ccc, .8);
 				transition: fill ease .2s;
 
-				&.close {
-					fill: #EE3163;
-					
-					&:hover {
-						fill: darken(#EE3163, 10%);
-					}
-				}
-
-				&.min {
-					fill: rgb(254,153,65);
-
-					&:hover {
-						fill: darken(rgb(254,153,65), 10%);
-					}
-				}
-
-				&.max {
-					fill: rgb(0,185,56);
-
-					&:hover {
-						fill: darken(rgb(0,185,56), 10%);
-					}
+				&:hover {
+					cursor: pointer;
+					fill: #eee;
 				}
 			}
 		}
@@ -51,6 +33,12 @@
 			font-size: 15px;
 			user-select: none;
 			cursor: default;
+			font-weight: bold;
+			color: #fff;
 		}
+	}
+
+	&.no-radius .topbar { 
+		border-radius: 0; 
 	}
 }

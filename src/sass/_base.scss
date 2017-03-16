@@ -64,3 +64,8 @@ $color-nft-ok: darken($color-ok, 5%);
 		}
 	}
 }
+
+.wwise-no-scroll {
+	position: relative;
+	overflow: hidden;
+}

@@ -51,14 +51,12 @@ Utility.appendToBody = (dom) => {
 Utility.makeIconHTML = (type) => {
 	let href = '';
 
-	(type == 'ok') && (href = '#003-tick');
-	(type == 'error') && (href = '#002-cancel');
-	(type == 'info') && (href = '#004-info-button');
-	(type == 'caution') && (href = '#005-danger');
-	(type == 'min') && (href = '#006-line');
-	(type == 'max') && (href = '#008-plus');
-	(type == 'close') && (href = '#006-close');
-	(type == 'nft-close') && (href = '#001-close-1');
+	(type == 'ok') && (href = '#tick');
+	(type == 'error') && (href = '#cancel');
+	(type == 'info') && (href = '#info-button');
+	(type == 'caution') && (href = '#danger');
+	(type == 'min') && (href = '#minus-symbol');
+	(type == 'close') && (href = '#close');
 
 	return `<svg class="icon ${ type }"><use xlink:href="${ href }" /></svg>`;
 };
@@ -99,38 +97,50 @@ Utility.makeNftContent = (options) => {
 	return content;
 };
 
-Utility.makeButtons = (modal, options) => {
-	let buttons = [];
+Utility.standardizeButtons = (modal, options) => {
+	let buttons = [];	
 
 	if(options.buttons === undefined) {
 		if(options.type == 'caution' || options.type == 'info') {
-			buttons.push(
-				Button.create({
-					text: 'Cancel',
-					onClick: modal.close.bind(modal, 'cancel')
-				})
-			);
+			buttons.push({
+				key: 27,
+				text: 'Cancel',
+				onClick: modal.close.bind(modal, 'cancel')
+			});
 		}
 
-		buttons.push(
-			Button.create({
-				text: 'OK',
-				type: 'main',
-				onClick: modal.close.bind(modal, 'ok')
-			})
-		);
-	} else if(options.buttons) {
-		if(!(options.buttons.constructor === Array)) {
-			options.buttons = [options.buttons];
-		}
+		buttons.push({
+			key: 13,
+			text: 'OK',
+			type: 'main',
+			onClick: modal.close.bind(modal, 'ok')
+		});
 
-		for(let i in options.buttons) {
+		return buttons;
+	}
+
+	buttons = options.buttons;
+
+	if(!(buttons.constructor === Array)) {
+		buttons = [buttons];
+	}
+
+	for(let i in buttons) {
+		(!buttons[i].onClick) && (buttons[i].onClick = modal.close.bind(modal, buttons[i].id));
+	}
+
+	return buttons;
+};
+
+Utility.makeButtons = (buttonArr) => {
+	let buttons = [];
+
+	if(buttonArr) {
+		for(let i in buttonArr) {
 			buttons.push(Button.create({
-				text: options.buttons[i].text ? options.buttons[i].text : 'OK',
-				type: options.buttons[i].normal ? null : 'main',
-				onClick: options.buttons[i].onClick ? 
-					options.buttons[i].onClick :
-					modal.close.bind(modal, options.buttons[i].id)
+				text: buttonArr[i].text ? buttonArr[i].text : 'OK',
+				type: buttonArr[i].normal ? null : 'main',
+				onClick: buttonArr[i].onClick
 			}));
 		}
 	}
@@ -140,5 +150,22 @@ Utility.makeButtons = (modal, options) => {
 		children: buttons
 	});
 }
+
+Utility.bindButtonKeyEvents = (buttonArr) => {
+	let handler = (event) => {
+		for(let i in buttonArr) {
+			if(buttonArr[i].key === event.keyCode) {
+				buttonArr[i].onClick();
+				return;
+			}
+		}
+	};
+	window.addEventListener('keydown', handler);
+	return handler;
+};
+
+Utility.unbindButtonKeyEvents = (handler) => {
+	window.removeEventListener('keydown', handler);
+};
 
 export default Utility;

@@ -36,12 +36,17 @@ class Modal {
 			]
 		});
 
-		let buttons = Utility.makeButtons(this, options);
+		this.buttonArr = Utility.standardizeButtons(this, options);
+		let buttons = Utility.makeButtons(this.buttonArr);
 
 		// Content
 		let content = null;
-		if(typeof options.content === 'string') {
-			content = Utility.createDiv(null, options.content);
+		if(options.content) {
+			if(typeof options.content === 'string') {
+				content = Utility.createDiv(null, options.content);
+			} else {
+				content = options.content;
+			}
 		}
 
 		// Operations
@@ -66,11 +71,16 @@ class Modal {
 	}
 
 	open() {
+		if(this.wwise.opened) {
+			return;
+		}
+
 		let f = this.wwise.open();
 
 		this.value = undefined;
 		this.promise = new Promise((resolve) => { this.promiseResolve = resolve; });
 		this.wwise.getPromise().then(this.handlePromiseResolve.bind(this));
+		this.keyHandler = Utility.bindButtonKeyEvents(this.buttonArr);
 
 		if(this.options.closeAfter) {
 			window.setTimeout(() => {
@@ -82,8 +92,13 @@ class Modal {
 	}
 
 	close(value) {
+		if(!this.wwise.opened) {
+			return;
+		}
+
 		this.value = value;
-		this.wwise.close();
+		Utility.unbindButtonKeyEvents(this.keyHandler);
+		return this.wwise.close();
 	}
 
 	getPromise() {

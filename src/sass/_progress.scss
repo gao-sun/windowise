@@ -1,0 +1,43 @@
+.wwise-progress {
+	position: relative;
+	margin: 10px auto;
+	width: 95%;
+	max-width: 300px;
+	height: 3px;
+	background: rgba(#ddd, .8);
+	border-radius: 3px;
+	overflow: hidden;
+
+	.wait {
+		position: absolute;
+		top: 0;
+		width: 30px;
+		height: 3px;
+		background: #eee;
+		background: linear-gradient(to right, rgba(#ddd, 0), rgba(#fff, .8), rgba(#ddd, 0));
+		animation-name: wwise-progress;
+		animation-iteration-count: infinite;
+		animation-duration: 2s;
+	}
+
+	.bar {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 0;
+		height: 3px;
+		border-radius: 3px;
+		background: #fff;
+		transition: width linear .2s;
+	}
+}
+
+@keyframes wwise-progress {
+	from {
+		left: -30px;
+	}
+
+	to {
+		left: calc(100% + 30px);
+	}
+}

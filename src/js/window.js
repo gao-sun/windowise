@@ -13,9 +13,24 @@ let defaultOptions = {
 	overlay: false,
 	clickOverlayToClose: true,
 	removeBackground: false,
+	noRadius: false
 };
 
 class Window {
+	static create(dom, options) {
+		let title = dom.getElementsByClassName('title')[0];
+		(title) && (title = title.innerHTML);
+		let content = dom.getElementsByClassName('content')[0];
+		(content) && (content = content.innerHTML);
+
+		Utility.removeElement(dom);
+
+		options.title = title;
+		options.content = content;
+
+		return new Window(options);
+	}
+
 	constructor(options) {
 		// Init options
 		this.options = JSON.parse(JSON.stringify(defaultOptions));
@@ -112,7 +127,7 @@ class Window {
 
 		// Window
 		this.window = Utility.createDomTree({ 
-			dom: Utility.createDiv('wwise default'),
+			dom: Utility.createDiv('wwise' + (this.options.noRadius ? ' no-radius' : '')),
 			children: [
 				this.topbar,
 				this.content
@@ -169,11 +184,6 @@ class Window {
 
 		if(this.options.margin) {
 			this.wrapper.style.margin = this.options.margin;
-		}
-
-		// Border
-		if(this.options.noBorder) {
-			this.window.classList.add('no-border');
 		}
 
 		// Draggable
@@ -262,13 +272,22 @@ class Window {
 	}
 
 	appendDoms() {
-		(this.options.overlay && !this.hasOverlay) && (Utility.appendToBody(this.overlay));
+		if(this.options.overlay && !this.hasOverlay) {
+			Utility.appendToBody(this.overlay);
+			document.body.classList.add('wwise-no-scroll');
+			this.overlay.addEventListener('touchstart', (event) => {
+				event.preventDefault();
+			});
+		}
 		Utility.appendToBody(this.dom);
 	}
 
 	removeDoms() {
 		Utility.removeElement(this.dom);
-		(!this.options.keepOverlay) && (Utility.removeElement(this.overlay));
+		if(!this.options.keepOverlay) {
+			Utility.removeElement(this.overlay);
+			document.body.classList.remove('wwise-no-scroll');
+		}
 	}
 
 	// Draggable functions

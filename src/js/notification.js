@@ -5,7 +5,6 @@ let defaultOptions = {
 	type: null,
 	animation: 'right',
 	position: 'right top',
-	noBorder: true,
 	showClose: true,
 	clickToClose: false,
 	closeAfter: null
@@ -30,7 +29,6 @@ class Nft {
 		wwiseOptions.position = options.position;
 		wwiseOptions.style = options.style;
 		wwiseOptions.margin = '10px 15px';
-		wwiseOptions.noBorder = options.noBorder;
 		wwiseOptions.removeBackground = true;
 
 		this.wwise = new Window(wwiseOptions);
@@ -46,7 +44,7 @@ class Nft {
 		if(options.showClose) {
 			close = Utility.createDomTree({
 				dom: Utility.createDiv('close'),
-				children: [ Utility.createDiv(null, Utility.makeIconHTML('nft-close')) ]
+				children: [ Utility.createDiv(null, Utility.makeIconHTML('close')) ]
 			});
 
 			close.addEventListener('click', this.closeHandler);
@@ -63,6 +61,10 @@ class Nft {
 	}
 
 	open() {
+		if(this.wwise.opened) {
+			return;
+		}
+
 		let f = this.wwise.open();
 
 		this.promise = new Promise((resolve) => { this.promiseResolve = resolve; });
@@ -78,7 +80,11 @@ class Nft {
 	}
 
 	close() {
-		this.wwise.close();
+		if(!this.wwise.opened) {
+			return;
+		}
+
+		return this.wwise.close();
 	}
 
 	getPromise() {

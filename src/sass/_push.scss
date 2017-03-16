@@ -3,6 +3,7 @@
 		width: 100vw;
 		background: rgba(250,250,250,.95);
 		cursor: default;
+		padding: 5px 0;
 
 		.content {
 			padding: 10px;
@@ -26,13 +27,12 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			padding-bottom: 10px;
 
 			> * {
 				flex-shrink: 0;
-				max-width: 250px;
+				max-width: 300px;
 				width: 100%;
-				margin: 5px 10px;
+				margin: 10px;
 			}
 
 			.button {

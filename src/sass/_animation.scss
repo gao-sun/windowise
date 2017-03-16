@@ -90,7 +90,7 @@
 
 // Left
 .wwise-left-in-1 {
-	transform: translateX(-30vh);
+	transform: translateX(-30vw);
 	opacity: .5;
 }
 
@@ -100,13 +100,13 @@
 }
 
 .wwise-left-out-1 {
-	transform: translateX(-30vh);
+	transform: translateX(-30vw);
 	opacity: 0;
 }
 
 // Right
 .wwise-right-in-1 {
-	transform: translateX(30vh);
+	transform: translateX(30vw);
 	opacity: .5;
 }
 
@@ -116,7 +116,7 @@
 }
 
 .wwise-right-out-1 {
-	transform: translateX(30vh);
+	transform: translateX(30vw);
 	opacity: 0;
 }
 

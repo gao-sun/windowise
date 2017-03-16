@@ -1,0 +1,25 @@
+.wwise {
+	.input-wrapper {
+		margin: 15px auto -15px auto;
+
+		.input {
+			display: block;
+			margin: 0 auto;
+			width: 95%;
+			max-width: 300px;
+			outline: none;
+			border: none;
+			background: #f3f3f3;
+			padding: 15px;
+			font-size: 16px;
+			border-radius: 5px;
+		}
+
+		.error {
+			width: 95%;
+			text-align: center;
+			margin-top: 10px;
+			color: red;
+		}
+	}
+}

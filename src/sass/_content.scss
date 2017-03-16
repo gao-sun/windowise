@@ -2,9 +2,18 @@
 	> .content {
 		flex-grow: 1;
 		border-radius: 0 0 4px 4px;
+		background: white;
+		color: #333;
+		box-shadow: 0 1px 3px rgba(200,200,200,.5) inset;
 
 		&.no-topbar {
 			border-radius: 4px;
+			box-shadow: none;
 		}
+	}
+
+	&.no-radius > .content,
+	&.no-radius > .content.no-topbar { 
+		border-radius: 0; 
 	}
 }

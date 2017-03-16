@@ -11,9 +11,8 @@ let defaultOptions = {
 
 let defaultWwiseOptions = {
 	position: 'top',
-	noBorder: true,
 	overlay: false,
-	clickOverlayToClose: true,
+	clickOverlayToClose: false,
 	style: null,
 };
 
@@ -28,6 +27,8 @@ class Push {
 
 		let options = this.options;
 		let wwiseOptions = JSON.parse(JSON.stringify(defaultWwiseOptions));
+
+		(options.buttons === undefined) && (options.buttons = []);
 
 		for(let i in wwiseOptions) {
 			(options.hasOwnProperty(i)) && (wwiseOptions[i] = options[i]);
@@ -49,7 +50,10 @@ class Push {
 		// Content
 		let content = Utility.makeNftContent(options);
 
-		let buttons = Utility.makeButtons(this, options);
+		let append = (options.append) ? ( (typeof options.append === 'string') ? Utility.createDiv(null, options.append) : options.append ) : null;
+
+		this.buttonArr = Utility.standardizeButtons(this, options);
+		let buttons = Utility.makeButtons(this.buttonArr);
 
 		(!buttons.innerHTML) && (buttons = null);
 
@@ -59,15 +63,20 @@ class Push {
 		
 		return Utility.createDomTree({
 			dom: dom,
-			children: [ content, buttons ]
+			children: [ content, append, buttons ]
 		});
 	}
 
 	open() {
+		if(this.wwise.opened) {
+			return;
+		}
+
 		let f = this.wwise.open();
 
 		this.promise = new Promise((resolve) => { this.promiseResolve = resolve; });
 		this.wwise.getPromise().then(this.handlePromiseResolve.bind(this));
+		this.keyHandler = Utility.bindButtonKeyEvents(this.buttonArr);
 
 		if(this.options.closeAfter) {
 			window.setTimeout(() => {
@@ -79,8 +88,13 @@ class Push {
 	}
 
 	close(value) {
+		if(!this.wwise.opened) {
+			return;
+		}
+
 		this.value = value;
-		this.wwise.close();
+		Utility.unbindButtonKeyEvents(this.keyHandler);
+		return this.wwise.close();
 	}
 
 	getPromise() {
