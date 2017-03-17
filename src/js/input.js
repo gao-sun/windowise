@@ -13,7 +13,8 @@ let defaultWwiseOptions = {
 	type: 'info',
 	keepOverlay: false,
 	title: 'Input',
-	text: ''
+	text: '',
+	zIndex: null,
 };
 
 

@@ -21,6 +21,7 @@ class Modal {
 		wwiseOptions.keepOverlay = options.keepOverlay;
 		wwiseOptions.clickOverlayToClose = false;
 		wwiseOptions.animation = options.animation;
+		wwiseOptions.zIndex = options.zIndex;
 
 		this.wwise = new Window(wwiseOptions);
 	}

@@ -30,6 +30,7 @@ class Nft {
 		wwiseOptions.style = options.style;
 		wwiseOptions.margin = '10px 15px';
 		wwiseOptions.removeBackground = true;
+		wwiseOptions.zIndex = options.zIndex;
 
 		this.wwise = new Window(wwiseOptions);
 	}

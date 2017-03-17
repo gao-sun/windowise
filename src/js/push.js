@@ -14,6 +14,7 @@ let defaultWwiseOptions = {
 	overlay: false,
 	clickOverlayToClose: false,
 	style: null,
+	zIndex: null,
 };
 
 class Push {

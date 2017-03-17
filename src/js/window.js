@@ -13,7 +13,8 @@ let defaultOptions = {
 	overlay: false,
 	clickOverlayToClose: true,
 	removeBackground: false,
-	noRadius: false
+	noRadius: false,
+	zIndex: null
 };
 
 class Window {
@@ -59,6 +60,7 @@ class Window {
 				this.hasOverlay = true;
 			} else {
 				this.overlay = Utility.createDiv('wwise-overlay');
+				(this.options.zIndex) && (this.overlay.style.zIndex = this.options.zIndex);
 			}
 			
 			this.overlayClickHandler = this.close.bind(this, undefined);
@@ -135,8 +137,11 @@ class Window {
 		});
 
 		// Wrapper
+		let wrapperDom = Utility.createDiv('wwise-wrapper');
+
+		(this.options.zIndex) && (wrapperDom.style.zIndex = this.options.zIndex);
 		this.wrapper = Utility.createDomTree({
-			dom: Utility.createDiv('wwise-wrapper'),
+			dom: wrapperDom,
 			children: [ this.window ]
 		});
 
