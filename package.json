@@ -1,6 +1,6 @@
 {
   "name": "windowise",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wisely create window/modal/notification/push in webpages.",
   "main": "dist/windowise.js",
   "scripts": {
@@ -15,7 +15,10 @@
     "css",
     "modal",
     "dialog",
-    "window"
+    "window",
+    "notification",
+    "popup",
+    "push"
   ],
   "author": "Gao Sun",
   "license": "MIT",
