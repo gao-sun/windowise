@@ -1,6 +1,6 @@
 {
   "name": "windowise",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Wisely create window/modal/notification/push in webpages.",
   "main": "dist/windowise.js",
   "scripts": {
