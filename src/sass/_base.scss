@@ -1,7 +1,7 @@
-$color-ok: #25DD76;
-$color-error: #EE3163;
-$color-info: #1E90FF;
-$color-caution: #FF9000;
+$color-ok: #2dc150;
+$color-error: #BE1133;
+$color-info: #2A80FF;
+$color-caution: #EF8000;
 $color-nft-ok: darken($color-ok, 5%);
 
 .wwise-perspective {
@@ -17,6 +17,7 @@ $color-nft-ok: darken($color-ok, 5%);
 	position: fixed;
 	width: 0;
 	height: 0;
+	font-weight: 400;
 
 	&.v-center {
 		top: 50%;
