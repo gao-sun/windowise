@@ -208,6 +208,7 @@ class Window {
 
 		if(this.options.clickOverlayToClose) {
 			this.overlay.addEventListener('click', this.overlayClickHandler);
+			this.overlay.addEventListener('touchstart', this.overlayClickHandler);
 		}
 
 		let animation = fromMin ? 'min' : this.options.animation;
@@ -240,7 +241,10 @@ class Window {
 
 		let animation = toMin ? 'min' : this.options.animation;
 
-		(this.overlay) && (this.overlay.removeEventListener('click', this.overlayClickHandler));
+		if(this.overlay) {
+			this.overlay.removeEventListener('click', this.overlayClickHandler);
+			this.overlay.removeEventListener('touchstart', this.overlayClickHandler);
+		}
 
 		if(animation) {
 			if(animation == 'min' || animation == 'flip') {
